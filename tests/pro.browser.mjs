@@ -4,7 +4,8 @@ const browser=await chromium.launch({channel:'chrome',headless:true});
 const page=await browser.newPage({viewport:{width:1512,height:1000},deviceScaleFactor:1});
 const errors=[];page.on('pageerror',e=>errors.push(e.message));
 try {
- await page.goto('http://127.0.0.1:5178');await page.waitForFunction(()=>!!window.evDebug);await page.waitForTimeout(400);
+ await page.goto(process.env.TEST_BASE_URL || 'http://127.0.0.1:5178');await page.waitForFunction(()=>!!window.evDebug);await page.waitForTimeout(400);
+ assert.ok(await page.locator('.passenger-panel img').evaluate(img=>img.complete&&img.naturalWidth>0),'Vehicle image loaded');
  assert.match(await page.locator('#vehicle-variant').innerText(),/V2 RWD Uzun Menzil/);assert.ok(await page.locator('#vehicle-variant').isVisible());
  const finish=()=>page.evaluate(()=>{let n=300;while(!['done','failed'].includes(evDebug.sim.status)&&n--)evDebug.advance();if(n<=0)throw Error('Loop guard');return {status:evDebug.sim.status,state:evDebug.sim.state,trace:evDebug.sim.trace};});
  const playbackPosition=await page.evaluate(()=>({play:document.querySelector('#play').getBoundingClientRect().bottom,model:document.querySelector('#viewport').getBoundingClientRect().top}));assert.ok(playbackPosition.play<=playbackPosition.model,'Playback controls above 3D viewport');

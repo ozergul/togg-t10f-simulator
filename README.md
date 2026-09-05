@@ -4,7 +4,7 @@ Togg T10F V2 RWD Uzun Menzil referanslı Türkçe 3D araç sistem laboratuvarı.
 
 ## Açılış
 
-Canlı uygulama: https://ozergul.github.io/togg-t10f-simulator/
+Canlı uygulama: https://ozergul.dev/togg-t10f-simulator/
 
 `main` dalına gönderilen değişiklikler GitHub Actions ile test edilir ve GitHub Pages'e yayımlanır.
 
